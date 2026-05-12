@@ -22,15 +22,81 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 48px 20px 48px;
+    padding: 32px 20px 48px;
+  }
+  .layout {
+    width: 100%;
+    max-width: 1320px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 28px;
+    align-items: start;
+  }
+  @media (min-width: 1180px) {
+    .layout { grid-template-columns: 180px minmax(0, 1fr) 180px; }
   }
   .wrap {
     width: 100%;
     max-width: 920px;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
-    gap: 40px;
+    gap: 36px;
   }
+  .ad-side {
+    position: sticky;
+    top: 24px;
+    height: 600px;
+    background: linear-gradient(180deg, #131316 0%, #0e0e10 100%);
+    border: 1px dashed #27272a;
+    border-radius: 14px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    color: #3f3f46;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  @media (min-width: 1180px) {
+    .ad-side { display: flex; }
+  }
+
+  /* Hero CTA: affiliate */
+  .cta-affiliate {
+    background: linear-gradient(135deg, #131316 0%, #0e0e10 100%);
+    border: 1px solid #1f1f23;
+    border-radius: 18px;
+    padding: 22px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .cta-affiliate h3 {
+    font-size: 14px;
+    font-weight: 700;
+    color: #f5f5f7;
+    letter-spacing: -0.01em;
+  }
+  .cta-affiliate .cta-sub { color: #71717a; font-size: 12px; line-height: 1.5; }
+  .cta-buttons { display: flex; gap: 10px; flex-wrap: wrap; }
+  .cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #1f1f23;
+    color: #e8e8ea;
+    text-decoration: none;
+    padding: 9px 14px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    border: 1px solid #27272a;
+    transition: all 0.15s ease;
+  }
+  .cta-btn:hover { background: #2a2a30; border-color: #3f3f46; transform: translateY(-1px); }
+  .cta-btn .arrow { color: #52525b; font-size: 10px; }
 
   header {
     display: flex;
@@ -301,6 +367,114 @@
     border-color: #e8e8ea;
   }
   .comments { display: flex; flex-direction: column; gap: 14px; }
+  /* Topic-grouped carousels (Akış view) */
+  .topic-group { display: flex; flex-direction: column; gap: 10px; margin-bottom: 22px; }
+  .topic-group-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2px;
+  }
+  .topic-group-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: -0.01em;
+  }
+  .topic-group-title .dot { width: 8px; height: 8px; border-radius: 50%; }
+  .topic-group-title .count {
+    color: #52525b;
+    font-size: 11px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+  .topic-group-link {
+    background: none;
+    border: none;
+    color: #71717a;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    padding: 4px 8px;
+    border-radius: 8px;
+    transition: all 0.15s ease;
+  }
+  .topic-group-link:hover { background: #1f1f23; color: #d4d4d8; }
+  .topic-scroll-wrap {
+    position: relative;
+  }
+  .topic-scroll {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    padding-bottom: 4px;
+    scroll-behavior: smooth;
+  }
+  .topic-scroll::-webkit-scrollbar { display: none; }
+  .topic-scroll .comment {
+    flex: 0 0 320px;
+    scroll-snap-align: start;
+    margin: 0;
+  }
+  @media (max-width: 640px) {
+    .topic-scroll .comment { flex: 0 0 88%; }
+  }
+  .scroll-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: rgba(20, 20, 23, 0.92);
+    border: 1px solid #27272a;
+    color: #e8e8ea;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    z-index: 5;
+    transition: all 0.15s ease;
+    backdrop-filter: blur(8px);
+  }
+  .scroll-arrow:hover { background: #27272a; }
+  .scroll-arrow.left { left: -8px; }
+  .scroll-arrow.right { right: -8px; }
+  .scroll-arrow:disabled { opacity: 0.3; cursor: default; }
+  @media (max-width: 640px) {
+    .scroll-arrow { display: none; }
+  }
+
+  /* Engagement stats */
+  .stats-strip {
+    display: flex;
+    gap: 16px;
+    padding: 12px 16px;
+    background: #0e0e10;
+    border: 1px solid #1a1a1e;
+    border-radius: 12px;
+    font-size: 12px;
+    color: #71717a;
+    flex-wrap: wrap;
+  }
+  .stat-item { display: flex; align-items: center; gap: 6px; }
+  .stat-value {
+    color: #e8e8ea;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .stat-item .pulse-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: #4ade80;
+    box-shadow: 0 0 8px rgba(74, 222, 128, 0.6);
+    animation: pulse 2s ease-in-out infinite;
+  }
   .comment-empty { color: #52525b; font-size: 13px; padding: 32px 0; text-align: center; }
   .comment {
     background: #0e0e10;
@@ -403,7 +577,9 @@
 </style>
 </head>
 <body>
-  <div class="wrap">
+  <div class="layout">
+    <aside class="ad-side ad-left">Reklam Alanı</aside>
+    <div class="wrap">
     <header>
       <div class="logo"><span class="logo-dot"></span>Piyasa</div>
       <div class="header-right">
@@ -414,6 +590,12 @@
         <button id="admin-btn" class="admin-btn" type="button" title="Admin girişi">Admin</button>
       </div>
     </header>
+
+    <div class="stats-strip">
+      <div class="stat-item"><span class="pulse-dot"></span> <span class="stat-value" id="stat-active">—</span> aktif kullanıcı</div>
+      <div class="stat-item">📝 <span class="stat-value" id="stat-comments">—</span> toplam yorum</div>
+      <div class="stat-item">⚡ <span class="stat-value" id="stat-today">—</span> bugün</div>
+    </div>
 
     <section>
       <div class="section-label">Kıymetli Madenler</div>
@@ -447,6 +629,17 @@
         <div class="fx-card"><div class="fx-head"><span class="fx-name">USD / TRY</span><span class="fx-flag">🇺🇸</span></div><div class="fx-value" id="usd-val">—</div><div class="fx-change flat" id="usd-change">—</div></div>
         <div class="fx-card"><div class="fx-head"><span class="fx-name">EUR / TRY</span><span class="fx-flag">🇪🇺</span></div><div class="fx-value" id="eur-val">—</div><div class="fx-change flat" id="eur-change">—</div></div>
         <div class="fx-card"><div class="fx-head"><span class="fx-name">GBP / TRY</span><span class="fx-flag">🇬🇧</span></div><div class="fx-value" id="gbp-val">—</div><div class="fx-change flat" id="gbp-change">—</div></div>
+      </div>
+    </section>
+
+    <section class="cta-affiliate">
+      <h3>💸 Yatırıma Başla</h3>
+      <p class="cta-sub">Güvenilir Türk platformları üzerinden altın, gümüş, kripto ve hisse senedi yatırımı yap.</p>
+      <div class="cta-buttons">
+        <a class="cta-btn" href="https://www.btcturk.com" target="_blank" rel="noopener sponsored">BtcTurk <span class="arrow">↗</span></a>
+        <a class="cta-btn" href="https://www.paribu.com" target="_blank" rel="noopener sponsored">Paribu <span class="arrow">↗</span></a>
+        <a class="cta-btn" href="https://www.getmidas.com" target="_blank" rel="noopener sponsored">Midas <span class="arrow">↗</span></a>
+        <a class="cta-btn" href="https://www.binance.com/tr" target="_blank" rel="noopener sponsored">Binance TR <span class="arrow">↗</span></a>
       </div>
     </section>
 
@@ -527,6 +720,8 @@
     </section>
 
     <footer>© 2026 · Bilgi amaçlıdır, yatırım tavsiyesi değildir</footer>
+    </div>
+    <aside class="ad-side ad-right">Reklam Alanı</aside>
   </div>
 
 <script type="module">
@@ -752,54 +947,165 @@
     return ({ 'Altın':'altin','Gümüş':'gumus','Döviz':'doviz','Borsa':'borsa','Genel':'genel' })[t] || 'genel';
   }
 
+  const TOPICS = ['Altın', 'Gümüş', 'Döviz', 'Borsa', 'Genel'];
+  const TOPIC_COLORS = { 'Altın':'#facc15','Gümüş':'#d4d4d8','Döviz':'#4ade80','Borsa':'#60a5fa','Genel':'#a1a1aa' };
+
+  function commentCardHTML(c, admin) {
+    const name = c.name || 'Anonim';
+    const topic = normalizeTopic(c.topic);
+    const tcls = topicClass(topic);
+    const delBtn = admin ? `<button class="comment-delete" data-id="${escapeHtml(c.id)}">sil</button>` : '';
+    return `
+      <article class="comment">
+        <div class="comment-head">
+          <div class="avatar" style="background:${avatarColor(name)}">${escapeHtml(initial(name))}</div>
+          <div class="comment-meta">
+            <div class="comment-name">${escapeHtml(name)}</div>
+            <div class="comment-sub">
+              <span class="comment-topic ${tcls}">${escapeHtml(topic)}</span>
+              <span class="comment-time">${escapeHtml(timeAgo(c.timestamp))}</span>
+            </div>
+          </div>
+          ${delBtn}
+        </div>
+        <div class="comment-body">${escapeHtml(c.message)}</div>
+      </article>
+    `;
+  }
+
+  function attachDeleteHandlers(scope) {
+    scope.querySelectorAll('.comment-delete').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        if (!confirm('Bu yorumu silmek istediğine emin misin?')) return;
+        const id = btn.dataset.id;
+        const { doc, deleteDoc } = window._fs;
+        try {
+          await deleteDoc(doc(db, 'comments', id));
+        } catch (e) {
+          alert('Silme hatası: ' + (e.message || e));
+        }
+      });
+    });
+  }
+
   function renderComments() {
-    const list = activeFilter
-      ? allComments.filter(c => normalizeTopic(c.topic) === activeFilter)
-      : allComments;
     const root = $('comments');
-    $('comments-count').textContent = `${list.length} yorum`;
-    if (list.length === 0) {
-      root.innerHTML = '<div class="comment-empty">' + (FB_ACTIVE ? 'Henüz yorum yok. İlk sen yaz.' : 'Yorumlar Firebase kurulumu bekliyor.') + '</div>';
+    const admin = isAdmin();
+    updateStats();
+
+    if (activeFilter) {
+      // Filtered: flat vertical list
+      const list = allComments.filter(c => normalizeTopic(c.topic) === activeFilter);
+      $('comments-count').textContent = `${list.length} yorum`;
+      if (list.length === 0) {
+        root.innerHTML = '<div class="comment-empty">Bu konuda henüz yorum yok.</div>';
+        return;
+      }
+      root.innerHTML = list.map(c => commentCardHTML(c, admin)).join('');
+      attachDeleteHandlers(root);
       return;
     }
-    const admin = isAdmin();
-    root.innerHTML = list.map(c => {
-      const name = c.name || 'Anonim';
-      const topic = normalizeTopic(c.topic);
-      const tcls = topicClass(topic);
-      const delBtn = admin ? `<button class="comment-delete" data-id="${escapeHtml(c.id)}">sil</button>` : '';
-      return `
-        <article class="comment">
-          <div class="comment-head">
-            <div class="avatar" style="background:${avatarColor(name)}">${escapeHtml(initial(name))}</div>
-            <div class="comment-meta">
-              <div class="comment-name">${escapeHtml(name)}</div>
-              <div class="comment-sub">
-                <span class="comment-topic ${tcls}">${escapeHtml(topic)}</span>
-                <span class="comment-time">${escapeHtml(timeAgo(c.timestamp))}</span>
-              </div>
-            </div>
-            ${delBtn}
-          </div>
-          <div class="comment-body">${escapeHtml(c.message)}</div>
-        </article>
-      `;
-    }).join('');
 
-    if (admin) {
-      root.querySelectorAll('.comment-delete').forEach(btn => {
-        btn.addEventListener('click', async () => {
-          if (!confirm('Bu yorumu silmek istediğine emin misin?')) return;
-          const id = btn.dataset.id;
-          const { doc, deleteDoc } = window._fs;
-          try {
-            await deleteDoc(doc(db, 'comments', id));
-          } catch (e) {
-            alert('Silme hatası: ' + (e.message || e));
-          }
-        });
-      });
+    // Akış (grouped by topic, horizontal scroll)
+    $('comments-count').textContent = `${allComments.length} yorum`;
+    if (!FB_ACTIVE) {
+      root.innerHTML = '<div class="comment-empty">Yorumlar Firebase kurulumu bekliyor.</div>';
+      return;
     }
+    if (allComments.length === 0) {
+      root.innerHTML = '<div class="comment-empty">Henüz yorum yok. İlk sen yaz.</div>';
+      return;
+    }
+
+    const byTopic = {};
+    for (const t of TOPICS) byTopic[t] = [];
+    for (const c of allComments) {
+      const t = normalizeTopic(c.topic);
+      if (byTopic[t]) byTopic[t].push(c);
+      else byTopic['Genel'].push(c);
+    }
+
+    const sections = TOPICS
+      .filter(t => byTopic[t].length > 0)
+      .map(t => {
+        const cards = byTopic[t].map(c => commentCardHTML(c, admin)).join('');
+        return `
+          <section class="topic-group" data-topic="${escapeHtml(t)}">
+            <div class="topic-group-head">
+              <div class="topic-group-title">
+                <span class="dot" style="background:${TOPIC_COLORS[t]}"></span>
+                ${escapeHtml(t)}
+                <span class="count">${byTopic[t].length}</span>
+              </div>
+              <button class="topic-group-link" data-topic-link="${escapeHtml(t)}">tümünü gör →</button>
+            </div>
+            <div class="topic-scroll-wrap">
+              <button class="scroll-arrow left" data-dir="left" type="button">◀</button>
+              <div class="topic-scroll">${cards}</div>
+              <button class="scroll-arrow right" data-dir="right" type="button">▶</button>
+            </div>
+          </section>
+        `;
+      }).join('');
+
+    root.innerHTML = sections || '<div class="comment-empty">Henüz yorum yok. İlk sen yaz.</div>';
+    attachDeleteHandlers(root);
+
+    // Topic header click → switch filter
+    root.querySelectorAll('[data-topic-link]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const t = btn.dataset.topicLink;
+        document.querySelectorAll('.filter-pill').forEach(p => {
+          p.classList.toggle('active', p.dataset.topic === t);
+        });
+        activeFilter = t;
+        renderComments();
+        document.querySelector('.filters').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    // Scroll arrows
+    root.querySelectorAll('.scroll-arrow').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const scrollEl = btn.parentElement.querySelector('.topic-scroll');
+        const cardWidth = scrollEl.querySelector('.comment')?.offsetWidth || 320;
+        scrollEl.scrollBy({ left: (btn.dataset.dir === 'left' ? -1 : 1) * (cardWidth + 12) * 2, behavior: 'smooth' });
+      });
+    });
+
+    // Update arrow disabled state on scroll
+    root.querySelectorAll('.topic-scroll').forEach(scrollEl => {
+      const updateArrows = () => {
+        const wrap = scrollEl.parentElement;
+        const left = wrap.querySelector('.scroll-arrow.left');
+        const right = wrap.querySelector('.scroll-arrow.right');
+        left.disabled = scrollEl.scrollLeft <= 2;
+        right.disabled = scrollEl.scrollLeft + scrollEl.clientWidth >= scrollEl.scrollWidth - 2;
+      };
+      scrollEl.addEventListener('scroll', updateArrows, { passive: true });
+      updateArrows();
+    });
+  }
+
+  function updateStats() {
+    const total = allComments.length;
+    const hourAgo = Date.now() - 3600 * 1000;
+    const todayStart = new Date(); todayStart.setHours(0,0,0,0);
+    const todayCount = allComments.filter(c => {
+      const t = c.timestamp?.toDate ? c.timestamp.toDate().getTime() : 0;
+      return t >= todayStart.getTime();
+    }).length;
+    const activeUsers = new Set(
+      allComments
+        .filter(c => {
+          const t = c.timestamp?.toDate ? c.timestamp.toDate().getTime() : 0;
+          return t >= hourAgo;
+        })
+        .map(c => (c.name || 'Anonim').toLowerCase())
+    ).size;
+    $('stat-comments').textContent = total;
+    $('stat-today').textContent = todayCount;
+    $('stat-active').textContent = activeUsers || '0';
   }
 
   document.querySelectorAll('.filter-pill').forEach(btn => {
