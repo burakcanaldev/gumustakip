@@ -270,48 +270,61 @@
     color: #0a0a0b;
     border-color: #e8e8ea;
   }
-  .comments { display: flex; flex-direction: column; gap: 12px; }
-  .comment-empty { color: #52525b; font-size: 13px; padding: 24px 0; text-align: center; }
+  .comments { display: flex; flex-direction: column; gap: 14px; }
+  .comment-empty { color: #52525b; font-size: 13px; padding: 32px 0; text-align: center; }
   .comment {
     background: #0e0e10;
     border: 1px solid #1a1a1e;
-    border-radius: 14px;
-    padding: 16px 18px;
+    border-radius: 16px;
+    padding: 18px 20px;
     transition: border-color 0.15s ease;
+    animation: pop-in 0.25s ease;
   }
-  .comment:hover { border-color: #27272a; }
+  @keyframes pop-in {
+    from { opacity: 0; transform: translateY(-4px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .comment:hover { border-color: #2a2a30; }
   .comment-head {
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin-bottom: 8px;
+    gap: 12px;
+    margin-bottom: 10px;
     flex-wrap: wrap;
   }
   .avatar {
-    width: 28px; height: 28px;
+    width: 36px; height: 36px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #3f3f46 0%, #27272a 100%);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 700;
-    color: #d4d4d8;
+    color: #fff;
     flex-shrink: 0;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
   }
-  .comment-name { font-size: 14px; font-weight: 600; color: #e8e8ea; }
+  .comment-meta { display: flex; flex-direction: column; gap: 1px; line-height: 1.2; }
+  .comment-name { font-size: 15px; font-weight: 700; color: #f5f5f7; }
+  .comment-sub { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #52525b; }
   .comment-topic {
     font-size: 10px;
-    padding: 2px 8px;
+    padding: 2px 9px;
     border-radius: 999px;
-    background: #1f1f23;
-    color: #a1a1aa;
-    font-weight: 600;
+    font-weight: 700;
     letter-spacing: 0.04em;
     text-transform: uppercase;
+    line-height: 1.5;
   }
-  .comment-time { font-size: 11px; color: #52525b; margin-left: auto; font-variant-numeric: tabular-nums; }
-  .comment-body { color: #d4d4d8; font-size: 14px; line-height: 1.55; white-space: pre-wrap; word-wrap: break-word; }
+  .comment-topic.altin  { background: rgba(250, 204, 21, 0.14); color: #facc15; }
+  .comment-topic.gumus  { background: rgba(212, 212, 216, 0.16); color: #e8e8ea; }
+  .comment-topic.doviz  { background: rgba(74, 222, 128, 0.14); color: #4ade80; }
+  .comment-topic.borsa  { background: rgba(96, 165, 250, 0.14); color: #60a5fa; }
+  .comment-topic.genel  { background: rgba(161, 161, 170, 0.14); color: #a1a1aa; }
+  .comment-time { font-variant-numeric: tabular-nums; }
+  .comment-time::before { content: '·'; margin-right: 6px; color: #3f3f46; }
+  .comment-body { color: #e8e8ea; font-size: 15px; line-height: 1.6; white-space: pre-wrap; word-wrap: break-word; padding-left: 48px; }
+  @media (max-width: 640px) { .comment-body { padding-left: 0; } }
 
   /* News */
   .news { display: flex; flex-direction: column; gap: 12px; }
@@ -417,11 +430,11 @@
           <div class="field">
             <label for="topic">Konu</label>
             <select id="topic" name="topic">
-              <option>Genel piyasa</option>
               <option>Altın</option>
               <option>Gümüş</option>
               <option>Döviz</option>
-              <option>Borsa / Hisse</option>
+              <option>Borsa</option>
+              <option>Genel</option>
             </select>
           </div>
         </div>
@@ -443,12 +456,12 @@
         <span class="sub" id="comments-count">—</span>
       </div>
       <div class="filters" id="filters">
-        <button class="filter-pill active" data-topic="">Hepsi</button>
-        <button class="filter-pill" data-topic="Genel piyasa">Genel</button>
+        <button class="filter-pill active" data-topic="">Akış</button>
         <button class="filter-pill" data-topic="Altın">Altın</button>
         <button class="filter-pill" data-topic="Gümüş">Gümüş</button>
         <button class="filter-pill" data-topic="Döviz">Döviz</button>
-        <button class="filter-pill" data-topic="Borsa / Hisse">Borsa</button>
+        <button class="filter-pill" data-topic="Borsa">Borsa</button>
+        <button class="filter-pill" data-topic="Genel">Genel</button>
       </div>
       <div class="comments" id="comments">
         <div class="comment-empty">Yorumlar yükleniyor…</div>
@@ -592,26 +605,52 @@
     const n = (name || 'Anonim').trim();
     return n.charAt(0).toUpperCase() || '?';
   }
+  function avatarColor(name) {
+    const s = (name || 'Anonim').trim() || 'Anonim';
+    let h = 0;
+    for (let i = 0; i < s.length; i++) h = ((h << 5) - h) + s.charCodeAt(i);
+    return `hsl(${Math.abs(h) % 360}, 55%, 42%)`;
+  }
+  function normalizeTopic(t) {
+    if (!t) return 'Genel';
+    if (t === 'Genel piyasa') return 'Genel';
+    if (t === 'Borsa / Hisse') return 'Borsa';
+    return t;
+  }
+  function topicClass(t) {
+    return ({ 'Altın':'altin','Gümüş':'gumus','Döviz':'doviz','Borsa':'borsa','Genel':'genel' })[t] || 'genel';
+  }
 
   function renderComments() {
-    const list = activeFilter ? allComments.filter(c => c.topic === activeFilter) : allComments;
+    const list = activeFilter
+      ? allComments.filter(c => normalizeTopic(c.topic) === activeFilter)
+      : allComments;
     const root = $('comments');
     $('comments-count').textContent = `${list.length} yorum`;
     if (list.length === 0) {
       root.innerHTML = '<div class="comment-empty">' + (FB_ACTIVE ? 'Henüz yorum yok. İlk sen yaz.' : 'Yorumlar Firebase kurulumu bekliyor.') + '</div>';
       return;
     }
-    root.innerHTML = list.map(c => `
-      <article class="comment">
-        <div class="comment-head">
-          <div class="avatar">${escapeHtml(initial(c.name))}</div>
-          <div class="comment-name">${escapeHtml(c.name || 'Anonim')}</div>
-          <div class="comment-topic">${escapeHtml(c.topic || '')}</div>
-          <div class="comment-time">${escapeHtml(timeAgo(c.timestamp))}</div>
-        </div>
-        <div class="comment-body">${escapeHtml(c.message)}</div>
-      </article>
-    `).join('');
+    root.innerHTML = list.map(c => {
+      const name = c.name || 'Anonim';
+      const topic = normalizeTopic(c.topic);
+      const tcls = topicClass(topic);
+      return `
+        <article class="comment">
+          <div class="comment-head">
+            <div class="avatar" style="background:${avatarColor(name)}">${escapeHtml(initial(name))}</div>
+            <div class="comment-meta">
+              <div class="comment-name">${escapeHtml(name)}</div>
+              <div class="comment-sub">
+                <span class="comment-topic ${tcls}">${escapeHtml(topic)}</span>
+                <span class="comment-time">${escapeHtml(timeAgo(c.timestamp))}</span>
+              </div>
+            </div>
+          </div>
+          <div class="comment-body">${escapeHtml(c.message)}</div>
+        </article>
+      `;
+    }).join('');
   }
 
   document.querySelectorAll('.filter-pill').forEach(btn => {
