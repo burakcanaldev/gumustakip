@@ -924,10 +924,7 @@
   const getSell = (o) => parseNum(o['Satış'] ?? o.Selling ?? o.selling);
   const getChg  = (o) => parseNum(o['Değişim'] ?? o.Change ?? o.change);
 
-  async function loadPrices() {
-    try {
-      const res = await fetch('https://finans.truncgil.com/v4/today.json', { cache: 'no-store' });
-      const d = await res.json();
+  function renderPrices(d) {
       const silver = d.GUMUS || {}, gold = d.GRA || {}, ons = d.ONS || {};
       const usd = d.USD || {}, eur = d.EUR || {}, gbp = d.GBP || {};
 
@@ -973,16 +970,37 @@
       setChange('usd-change', getChg(usd), 'fx-change');
       setChange('eur-change', getChg(eur), 'fx-change');
       setChange('gbp-change', getChg(gbp), 'fx-change');
+  }
 
-      const now = new Date();
-      $('last-update').textContent = `Canlı · ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+  function updateLastSeen() {
+    const now = new Date();
+    $('last-update').textContent = `Canlı · ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}:${String(now.getSeconds()).padStart(2,'0')}`;
+  }
+
+  async function loadPrices() {
+    try {
+      const res = await fetch('https://finans.truncgil.com/v4/today.json', { cache: 'no-store' });
+      const d = await res.json();
+      renderPrices(d);
+      updateLastSeen();
+      try { localStorage.setItem('px_cache', JSON.stringify({ t: Date.now(), data: d })); } catch {}
     } catch (e) {
       $('last-update').textContent = 'bağlantı hatası';
       console.error(e);
     }
   }
+
+  // Instant render from cache on page load (no "—" flicker)
+  try {
+    const cached = JSON.parse(localStorage.getItem('px_cache') || 'null');
+    if (cached && cached.data && (Date.now() - cached.t) < 10 * 60 * 1000) {
+      renderPrices(cached.data);
+      $('last-update').textContent = 'önbellek · güncelleniyor…';
+    }
+  } catch {}
+
   loadPrices();
-  setInterval(loadPrices, 30_000);
+  setInterval(loadPrices, 2000);
 
   // ============ Comments ============
   let activeFilter = '';
