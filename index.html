@@ -233,25 +233,36 @@
   .down { background: rgba(239, 68, 68, 0.12); color: #f87171; }
   .flat { background: rgba(113, 113, 122, 0.12); color: #a1a1aa; }
 
-  .price-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; position: relative; }
-  .price-block { display: flex; flex-direction: column; gap: 4px; }
+  .price-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; position: relative; }
+  .price-block { display: flex; flex-direction: column; gap: 8px; }
   .price-label {
     font-size: 11px;
     letter-spacing: 0.04em;
     text-transform: uppercase;
     color: #71717a;
-    font-weight: 500;
+    font-weight: 600;
   }
-  .price-value {
+  .dual-prices { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .dual-price { display: flex; flex-direction: column; gap: 2px; }
+  .dual-price .lbl {
+    font-size: 9px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #52525b;
+    font-weight: 700;
+  }
+  .dual-price .val {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 22px;
+    font-size: 16px;
     font-weight: 700;
     color: #f5f5f7;
     font-variant-numeric: tabular-nums;
     letter-spacing: -0.01em;
     line-height: 1.1;
   }
-  .price-unit { font-size: 11px; color: #52525b; font-family: 'JetBrains Mono', monospace; margin-top: 2px; }
+  .dual-price.sell .val { color: #f5f5f7; }
+  .dual-price.buy .val { color: #d4d4d8; }
+  .price-unit { font-size: 10px; color: #52525b; font-family: 'JetBrains Mono', monospace; margin-top: 2px; letter-spacing: 0.04em; }
 
   .fx { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
   .fx-card {
@@ -265,15 +276,7 @@
   .fx-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
   .fx-name { font-size: 13px; font-weight: 600; color: #d4d4d8; letter-spacing: 0.04em; }
   .fx-flag { font-size: 16px; }
-  .fx-value {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 22px;
-    font-weight: 700;
-    color: #f5f5f7;
-    font-variant-numeric: tabular-nums;
-    letter-spacing: -0.01em;
-  }
-  .fx-change { font-family: 'JetBrains Mono', monospace; font-size: 11px; margin-top: 4px; font-variant-numeric: tabular-nums; font-weight: 600; }
+  .fx-change { font-family: 'JetBrains Mono', monospace; font-size: 11px; margin-top: 8px; font-variant-numeric: tabular-nums; font-weight: 600; }
   .fx-change.up   { color: #4ade80; background: none; padding: 0; }
   .fx-change.down { color: #f87171; background: none; padding: 0; }
   .fx-change.flat { color: #71717a; background: none; padding: 0; }
@@ -606,8 +609,20 @@
             <div class="metal-change flat" id="gold-change">—</div>
           </div>
           <div class="price-row">
-            <div class="price-block"><span class="price-label">Gram</span><span class="price-value" id="gold-gram">—</span><span class="price-unit">TL</span></div>
-            <div class="price-block"><span class="price-label">Ons</span><span class="price-value" id="gold-ounce">—</span><span class="price-unit">USD</span></div>
+            <div class="price-block">
+              <span class="price-label">Gram (TL)</span>
+              <div class="dual-prices">
+                <div class="dual-price buy"><span class="lbl">Alış</span><span class="val" id="gold-gram-buy">—</span></div>
+                <div class="dual-price sell"><span class="lbl">Satış</span><span class="val" id="gold-gram-sell">—</span></div>
+              </div>
+            </div>
+            <div class="price-block">
+              <span class="price-label">Ons (USD)</span>
+              <div class="dual-prices">
+                <div class="dual-price buy"><span class="lbl">Alış</span><span class="val" id="gold-ons-buy">—</span></div>
+                <div class="dual-price sell"><span class="lbl">Satış</span><span class="val" id="gold-ons-sell">—</span></div>
+              </div>
+            </div>
           </div>
         </article>
         <article class="metal-card silver">
@@ -616,8 +631,20 @@
             <div class="metal-change flat" id="silver-change">—</div>
           </div>
           <div class="price-row">
-            <div class="price-block"><span class="price-label">Gram</span><span class="price-value" id="silver-gram">—</span><span class="price-unit">TL</span></div>
-            <div class="price-block"><span class="price-label">Ons</span><span class="price-value" id="silver-ounce">—</span><span class="price-unit">USD</span></div>
+            <div class="price-block">
+              <span class="price-label">Gram (TL)</span>
+              <div class="dual-prices">
+                <div class="dual-price buy"><span class="lbl">Alış</span><span class="val" id="silver-gram-buy">—</span></div>
+                <div class="dual-price sell"><span class="lbl">Satış</span><span class="val" id="silver-gram-sell">—</span></div>
+              </div>
+            </div>
+            <div class="price-block">
+              <span class="price-label">Ons (USD)</span>
+              <div class="dual-prices">
+                <div class="dual-price buy"><span class="lbl">Alış</span><span class="val" id="silver-ons-buy">—</span></div>
+                <div class="dual-price sell"><span class="lbl">Satış</span><span class="val" id="silver-ons-sell">—</span></div>
+              </div>
+            </div>
           </div>
         </article>
       </div>
@@ -626,9 +653,30 @@
     <section>
       <div class="section-label">Döviz</div>
       <div class="fx">
-        <div class="fx-card"><div class="fx-head"><span class="fx-name">USD / TRY</span><span class="fx-flag">🇺🇸</span></div><div class="fx-value" id="usd-val">—</div><div class="fx-change flat" id="usd-change">—</div></div>
-        <div class="fx-card"><div class="fx-head"><span class="fx-name">EUR / TRY</span><span class="fx-flag">🇪🇺</span></div><div class="fx-value" id="eur-val">—</div><div class="fx-change flat" id="eur-change">—</div></div>
-        <div class="fx-card"><div class="fx-head"><span class="fx-name">GBP / TRY</span><span class="fx-flag">🇬🇧</span></div><div class="fx-value" id="gbp-val">—</div><div class="fx-change flat" id="gbp-change">—</div></div>
+        <div class="fx-card">
+          <div class="fx-head"><span class="fx-name">USD / TRY</span><span class="fx-flag">🇺🇸</span></div>
+          <div class="dual-prices">
+            <div class="dual-price buy"><span class="lbl">Alış</span><span class="val" id="usd-buy">—</span></div>
+            <div class="dual-price sell"><span class="lbl">Satış</span><span class="val" id="usd-sell">—</span></div>
+          </div>
+          <div class="fx-change flat" id="usd-change">—</div>
+        </div>
+        <div class="fx-card">
+          <div class="fx-head"><span class="fx-name">EUR / TRY</span><span class="fx-flag">🇪🇺</span></div>
+          <div class="dual-prices">
+            <div class="dual-price buy"><span class="lbl">Alış</span><span class="val" id="eur-buy">—</span></div>
+            <div class="dual-price sell"><span class="lbl">Satış</span><span class="val" id="eur-sell">—</span></div>
+          </div>
+          <div class="fx-change flat" id="eur-change">—</div>
+        </div>
+        <div class="fx-card">
+          <div class="fx-head"><span class="fx-name">GBP / TRY</span><span class="fx-flag">🇬🇧</span></div>
+          <div class="dual-prices">
+            <div class="dual-price buy"><span class="lbl">Alış</span><span class="val" id="gbp-buy">—</span></div>
+            <div class="dual-price sell"><span class="lbl">Satış</span><span class="val" id="gbp-sell">—</span></div>
+          </div>
+          <div class="fx-change flat" id="gbp-change">—</div>
+        </div>
       </div>
     </section>
 
@@ -872,6 +920,10 @@
     el.textContent = changeText(c);
   };
 
+  const getBuy  = (o) => parseNum(o['Alış']  ?? o.Buying  ?? o.buying);
+  const getSell = (o) => parseNum(o['Satış'] ?? o.Selling ?? o.selling);
+  const getChg  = (o) => parseNum(o['Değişim'] ?? o.Change ?? o.change);
+
   async function loadPrices() {
     try {
       const res = await fetch('https://finans.truncgil.com/v4/today.json', { cache: 'no-store' });
@@ -879,26 +931,48 @@
       const silver = d.GUMUS || {}, gold = d.GRA || {}, ons = d.ONS || {};
       const usd = d.USD || {}, eur = d.EUR || {}, gbp = d.GBP || {};
 
-      const usdSell = parseNum(usd['Satış'] ?? usd.Selling);
-      const silverGram = parseNum(silver['Satış'] ?? silver.Selling);
-      const goldGram = parseNum(gold['Satış'] ?? gold.Selling);
-      let goldOnce = parseNum(ons['Satış'] ?? ons.Selling);
-      if (!goldOnce || goldOnce === 0) goldOnce = (goldGram * TROY_OUNCE_G) / usdSell;
-      const silverOnce = (silverGram * TROY_OUNCE_G) / usdSell;
+      const usdBuy = getBuy(usd), usdSell = getSell(usd);
+      const eurBuy = getBuy(eur), eurSell = getSell(eur);
+      const gbpBuy = getBuy(gbp), gbpSell = getSell(gbp);
 
-      $('gold-gram').textContent = fmt(goldGram, 2);
-      $('gold-ounce').textContent = fmt(goldOnce, 2);
-      $('silver-gram').textContent = fmt(silverGram, 2);
-      $('silver-ounce').textContent = fmt(silverOnce, 2);
-      setChange('gold-change',   parseNum(gold['Değişim']   ?? gold.Change),   'metal-change');
-      setChange('silver-change', parseNum(silver['Değişim'] ?? silver.Change), 'metal-change');
+      // Gold gram
+      const goldGramBuy  = getBuy(gold);
+      const goldGramSell = getSell(gold);
+      // Gold ons — use API if available, else compute
+      let goldOnsBuy  = getBuy(ons);
+      let goldOnsSell = getSell(ons);
+      if (!goldOnsBuy  || goldOnsBuy  === 0) goldOnsBuy  = (goldGramBuy  * TROY_OUNCE_G) / usdSell;
+      if (!goldOnsSell || goldOnsSell === 0) goldOnsSell = (goldGramSell * TROY_OUNCE_G) / usdSell;
 
-      $('usd-val').textContent = fmt(usdSell, 4);
-      $('eur-val').textContent = fmt(parseNum(eur['Satış'] ?? eur.Selling), 4);
-      $('gbp-val').textContent = fmt(parseNum(gbp['Satış'] ?? gbp.Selling), 4);
-      setChange('usd-change', parseNum(usd['Değişim'] ?? usd.Change), 'fx-change');
-      setChange('eur-change', parseNum(eur['Değişim'] ?? eur.Change), 'fx-change');
-      setChange('gbp-change', parseNum(gbp['Değişim'] ?? gbp.Change), 'fx-change');
+      // Silver gram
+      const silverGramBuy  = getBuy(silver);
+      const silverGramSell = getSell(silver);
+      // Silver ons computed
+      const silverOnsBuy  = (silverGramBuy  * TROY_OUNCE_G) / usdSell;
+      const silverOnsSell = (silverGramSell * TROY_OUNCE_G) / usdSell;
+
+      $('gold-gram-buy').textContent   = fmt(goldGramBuy, 2);
+      $('gold-gram-sell').textContent  = fmt(goldGramSell, 2);
+      $('gold-ons-buy').textContent    = fmt(goldOnsBuy, 2);
+      $('gold-ons-sell').textContent   = fmt(goldOnsSell, 2);
+      $('silver-gram-buy').textContent = fmt(silverGramBuy, 2);
+      $('silver-gram-sell').textContent= fmt(silverGramSell, 2);
+      $('silver-ons-buy').textContent  = fmt(silverOnsBuy, 2);
+      $('silver-ons-sell').textContent = fmt(silverOnsSell, 2);
+
+      setChange('gold-change',   getChg(gold),   'metal-change');
+      setChange('silver-change', getChg(silver), 'metal-change');
+
+      $('usd-buy').textContent  = fmt(usdBuy, 4);
+      $('usd-sell').textContent = fmt(usdSell, 4);
+      $('eur-buy').textContent  = fmt(eurBuy, 4);
+      $('eur-sell').textContent = fmt(eurSell, 4);
+      $('gbp-buy').textContent  = fmt(gbpBuy, 4);
+      $('gbp-sell').textContent = fmt(gbpSell, 4);
+
+      setChange('usd-change', getChg(usd), 'fx-change');
+      setChange('eur-change', getChg(eur), 'fx-change');
+      setChange('gbp-change', getChg(gbp), 'fx-change');
 
       const now = new Date();
       $('last-update').textContent = `Canlı · ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
