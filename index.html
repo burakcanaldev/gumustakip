@@ -38,6 +38,36 @@
     align-items: center;
     gap: 16px;
   }
+  .header-right { display: flex; align-items: center; gap: 14px; }
+  .admin-btn {
+    background: transparent;
+    border: 1px solid #27272a;
+    color: #52525b;
+    padding: 5px 12px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    letter-spacing: 0.04em;
+    transition: all 0.15s ease;
+  }
+  .admin-btn:hover { border-color: #3f3f46; color: #a1a1aa; }
+  .admin-btn.signed-in { background: rgba(74, 222, 128, 0.12); color: #4ade80; border-color: rgba(74, 222, 128, 0.3); }
+  .comment-delete {
+    background: transparent;
+    border: 1px solid #3f3f46;
+    color: #71717a;
+    padding: 3px 10px;
+    border-radius: 6px;
+    font-size: 11px;
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: 600;
+    transition: all 0.15s ease;
+    margin-left: auto;
+  }
+  .comment-delete:hover { background: rgba(239, 68, 68, 0.14); color: #f87171; border-color: rgba(239, 68, 68, 0.3); }
   .logo {
     display: flex;
     align-items: center;
@@ -376,9 +406,12 @@
   <div class="wrap">
     <header>
       <div class="logo"><span class="logo-dot"></span>Piyasa</div>
-      <div class="status">
-        <span class="live-dot"></span>
-        <span id="last-update">yükleniyor…</span>
+      <div class="header-right">
+        <div class="status">
+          <span class="live-dot"></span>
+          <span id="last-update">yükleniyor…</span>
+        </div>
+        <button id="admin-btn" class="admin-btn" type="button" title="Admin girişi">Admin</button>
       </div>
     </header>
 
@@ -510,16 +543,53 @@
     appId: "1:1044125390683:web:178aab65f390841e992c7e",
   };
   const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xlgzzpyw';
+  const ADMIN_EMAIL = 'burakcanal.dev@gmail.com';
   const FB_ACTIVE = !FIREBASE_CONFIG.apiKey.startsWith('YOUR_');
 
-  let db = null;
+  let db = null, auth = null, currentUser = null;
   if (FB_ACTIVE) {
     const { initializeApp } = await import("https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js");
     const fs = await import("https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js");
+    const fa = await import("https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js");
     const app = initializeApp(FIREBASE_CONFIG);
     db = fs.getFirestore(app);
+    auth = fa.getAuth(app);
     window._fs = fs;
+    window._fa = fa;
     window._db = db;
+    window._auth = auth;
+  }
+
+  const isAdmin = () => currentUser && currentUser.email === ADMIN_EMAIL;
+
+  // ============ Profanity filter ============
+  const BAD_WORDS = [
+    'amk','aq','mk','oc','amcik','amina','amini','aminakoy','aminakoyim','aminakoyayim',
+    'sik','sikim','sikicem','sikerim','sikeyim','siktir','siktiri','sikis','sikkafa','sikiyim',
+    'yarrak','yarrag','yarragim',
+    'orospu','oruspu','orospucocugu',
+    'pic','picler',
+    'got','gotunu','gotveren','gotlek',
+    'ibne','ibinne',
+    'kahpe','kaltak',
+    'pezevenk',
+    'gavat','kavat',
+    'serefsiz',
+    'anani','ananin','anasini','anasinin','ananisikim',
+    'bacini','bacin','bacinin',
+    'gerizekali','gerzek',
+    'nigger','faggot','fuck','shit','bitch','asshole',
+  ];
+  function normalizeForFilter(s) {
+    return String(s).toLowerCase()
+      .replace(/ı/g, 'i').replace(/i̇/g, 'i')
+      .replace(/ş/g, 's').replace(/ç/g, 'c')
+      .replace(/ğ/g, 'g').replace(/ö/g, 'o').replace(/ü/g, 'u')
+      .replace(/[^a-z0-9 ]/g, ' ');
+  }
+  function hasProfanity(text) {
+    const n = ' ' + normalizeForFilter(text) + ' ';
+    return BAD_WORDS.some(w => n.includes(w));
   }
 
   // ============ Prices ============
@@ -631,10 +701,12 @@
       root.innerHTML = '<div class="comment-empty">' + (FB_ACTIVE ? 'Henüz yorum yok. İlk sen yaz.' : 'Yorumlar Firebase kurulumu bekliyor.') + '</div>';
       return;
     }
+    const admin = isAdmin();
     root.innerHTML = list.map(c => {
       const name = c.name || 'Anonim';
       const topic = normalizeTopic(c.topic);
       const tcls = topicClass(topic);
+      const delBtn = admin ? `<button class="comment-delete" data-id="${escapeHtml(c.id)}">sil</button>` : '';
       return `
         <article class="comment">
           <div class="comment-head">
@@ -646,11 +718,27 @@
                 <span class="comment-time">${escapeHtml(timeAgo(c.timestamp))}</span>
               </div>
             </div>
+            ${delBtn}
           </div>
           <div class="comment-body">${escapeHtml(c.message)}</div>
         </article>
       `;
     }).join('');
+
+    if (admin) {
+      root.querySelectorAll('.comment-delete').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          if (!confirm('Bu yorumu silmek istediğine emin misin?')) return;
+          const id = btn.dataset.id;
+          const { doc, deleteDoc } = window._fs;
+          try {
+            await deleteDoc(doc(db, 'comments', id));
+          } catch (e) {
+            alert('Silme hatası: ' + (e.message || e));
+          }
+        });
+      });
+    }
   }
 
   document.querySelectorAll('.filter-pill').forEach(btn => {
@@ -672,6 +760,39 @@
       console.error('Firestore listen error', err);
       $('comments').innerHTML = '<div class="comment-empty">Yorumlar yüklenirken hata oluştu.</div>';
     });
+
+    // Auth state
+    const { onAuthStateChanged, signInWithPopup, GoogleAuthProvider, signOut } = window._fa;
+    const adminBtn = $('admin-btn');
+    onAuthStateChanged(auth, (user) => {
+      currentUser = user;
+      if (user && user.email === ADMIN_EMAIL) {
+        adminBtn.textContent = 'Admin · Çıkış';
+        adminBtn.classList.add('signed-in');
+      } else {
+        adminBtn.textContent = 'Admin';
+        adminBtn.classList.remove('signed-in');
+      }
+      renderComments();
+    });
+    adminBtn.addEventListener('click', async () => {
+      if (currentUser) {
+        await signOut(auth);
+      } else {
+        const provider = new GoogleAuthProvider();
+        try {
+          const result = await signInWithPopup(auth, provider);
+          if (result.user.email !== ADMIN_EMAIL) {
+            alert('Bu hesap admin değil. Çıkış yapılıyor.');
+            await signOut(auth);
+          }
+        } catch (e) {
+          if (e.code !== 'auth/popup-closed-by-user') {
+            alert('Giriş hatası: ' + (e.message || e));
+          }
+        }
+      }
+    });
   } else {
     renderComments();
   }
@@ -689,6 +810,11 @@
     if (!data.message) {
       msgEl.className = 'form-msg error';
       msgEl.textContent = 'Yorum boş olamaz.';
+      return;
+    }
+    if (hasProfanity(data.message) || hasProfanity(data.name)) {
+      msgEl.className = 'form-msg error';
+      msgEl.textContent = 'Yorumun küfür veya hakaret içerdiği için reddedildi. Lütfen düzelt.';
       return;
     }
 
