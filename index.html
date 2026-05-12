@@ -476,7 +476,7 @@
           <textarea id="message" name="message" maxlength="1000" required placeholder="Bugün ne gördün, ne düşünüyorsun?"></textarea>
         </div>
         <div class="submit-row">
-          <span class="form-hint">Yorumlar herkese açıktır. Yatırım tavsiyesi değildir.</span>
+          <span class="form-hint">30sn cooldown · günde max 10 yorum · yatırım tavsiyesi değildir</span>
           <button class="submit" type="submit">Gönder</button>
         </div>
         <div class="form-msg" id="form-msg" role="status" aria-live="polite"></div>
@@ -590,6 +590,67 @@
   function hasProfanity(text) {
     const n = ' ' + normalizeForFilter(text) + ' ';
     return BAD_WORDS.some(w => n.includes(w));
+  }
+
+  // ============ Rate limiting (client-side anti-spam) ============
+  const COOLDOWN_SEC = 30;
+  const MAX_PER_DAY = 10;
+  const DUP_WINDOW_HRS = 24;
+  function normalizeMsg(s) {
+    return String(s).toLowerCase().trim().replace(/\s+/g, ' ');
+  }
+  function hashMsg(s) {
+    let h = 5381;
+    const n = normalizeMsg(s);
+    for (let i = 0; i < n.length; i++) h = (((h << 5) + h) + n.charCodeAt(i)) | 0;
+    return h;
+  }
+  function getHistory() {
+    try {
+      const cutoff = Date.now() - 24 * 3600 * 1000;
+      return (JSON.parse(localStorage.getItem('cmt_hist') || '[]')).filter(x => x.t > cutoff);
+    } catch { return []; }
+  }
+  function saveHistory(arr) {
+    try { localStorage.setItem('cmt_hist', JSON.stringify(arr)); } catch {}
+  }
+  function checkRateLimit(message) {
+    const history = getHistory();
+    const now = Date.now();
+    const last = history[history.length - 1];
+    if (last && (now - last.t) < COOLDOWN_SEC * 1000) {
+      const wait = Math.ceil((COOLDOWN_SEC * 1000 - (now - last.t)) / 1000);
+      return { ok: false, reason: `Çok hızlı yazıyorsun. ${wait} saniye bekle.` };
+    }
+    if (history.length >= MAX_PER_DAY) {
+      return { ok: false, reason: `Günlük yorum hakkın doldu (${MAX_PER_DAY}/gün). Yarın tekrar dene.` };
+    }
+    const h = hashMsg(message);
+    if (history.some(x => x.h === h)) {
+      return { ok: false, reason: 'Bu yorumu son 24 saatte yazdın. Farklı bir şey yaz.' };
+    }
+    return { ok: true };
+  }
+  function recordSubmission(message) {
+    const history = getHistory();
+    history.push({ t: Date.now(), h: hashMsg(message) });
+    saveHistory(history);
+  }
+  function startCooldownUI(btn) {
+    let secs = COOLDOWN_SEC;
+    btn.disabled = true;
+    btn.dataset.origText = btn.dataset.origText || btn.textContent;
+    btn.textContent = `Bekle (${secs}s)`;
+    const id = setInterval(() => {
+      secs--;
+      if (secs <= 0) {
+        clearInterval(id);
+        btn.disabled = false;
+        btn.textContent = btn.dataset.origText;
+      } else {
+        btn.textContent = `Bekle (${secs}s)`;
+      }
+    }, 1000);
   }
 
   // ============ Prices ============
@@ -817,6 +878,12 @@
       msgEl.textContent = 'Yorumun küfür veya hakaret içerdiği için reddedildi. Lütfen düzelt.';
       return;
     }
+    const rl = checkRateLimit(data.message);
+    if (!rl.ok) {
+      msgEl.className = 'form-msg error';
+      msgEl.textContent = rl.reason;
+      return;
+    }
 
     btn.disabled = true;
     msgEl.className = 'form-msg';
@@ -849,6 +916,9 @@
         msgEl.className = 'form-msg success';
         msgEl.textContent = 'Teşekkürler — yorumun yayınlandı.';
         e.target.reset();
+        recordSubmission(data.message);
+        startCooldownUI(btn);
+        return;
       } else {
         throw new Error('partial failure');
       }
@@ -856,7 +926,6 @@
       msgEl.className = 'form-msg error';
       msgEl.textContent = 'Gönderim hatası. Tekrar dener misin?';
       console.error(err);
-    } finally {
       btn.disabled = false;
     }
   });
