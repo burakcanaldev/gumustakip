@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gümüş Takip — Canlı Gümüş Fiyatı</title>
-<meta name="description" content="Türkiye'de gram gümüş alış/satış fiyatı, canlı takip. Sade ve hızlı.">
+<title>Piyasa — Canlı Altın, Gümüş, Döviz</title>
+<meta name="description" content="Altın, gümüş, dolar, euro, sterlin — canlı piyasa fiyatları. Sade ve hızlı.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
@@ -22,15 +22,16 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 48px 20px 32px;
+    padding: 48px 20px 48px;
   }
   .wrap {
     width: 100%;
-    max-width: 720px;
+    max-width: 920px;
     display: flex;
     flex-direction: column;
-    gap: 32px;
+    gap: 40px;
   }
+
   header {
     display: flex;
     justify-content: space-between;
@@ -42,7 +43,7 @@
     align-items: center;
     gap: 10px;
     font-weight: 700;
-    font-size: 18px;
+    font-size: 20px;
     letter-spacing: -0.01em;
   }
   .logo-dot {
@@ -71,193 +72,359 @@
     50% { opacity: 0.4; }
   }
 
-  .hero {
-    background: linear-gradient(180deg, #131316 0%, #0e0e10 100%);
-    border: 1px solid #1f1f23;
-    border-radius: 20px;
-    padding: 40px 32px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-  .hero::before {
-    content: '';
-    position: absolute;
-    top: -50%; left: 50%;
-    transform: translateX(-50%);
-    width: 80%; height: 100%;
-    background: radial-gradient(ellipse at center, rgba(212, 212, 216, 0.08) 0%, transparent 60%);
-    pointer-events: none;
-  }
-  .hero-label {
-    color: #71717a;
-    font-size: 13px;
-    letter-spacing: 0.04em;
+  .section-label {
+    font-size: 12px;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-    margin-bottom: 8px;
-    font-weight: 500;
-  }
-  .hero-price {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: clamp(48px, 10vw, 72px);
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    background: linear-gradient(135deg, #ffffff 0%, #a1a1aa 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    line-height: 1;
-    font-variant-numeric: tabular-nums;
-  }
-  .hero-unit {
     color: #71717a;
-    font-size: 14px;
-    margin-top: 12px;
-    font-weight: 500;
-  }
-  .hero-change {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    margin-top: 16px;
-    padding: 6px 12px;
-    border-radius: 999px;
-    font-size: 13px;
     font-weight: 600;
-    font-family: 'JetBrains Mono', monospace;
-    font-variant-numeric: tabular-nums;
+    margin-bottom: 16px;
   }
-  .change-up   { background: rgba(34, 197, 94, 0.12); color: #4ade80; }
-  .change-down { background: rgba(239, 68, 68, 0.12); color: #f87171; }
-  .change-flat { background: rgba(113, 113, 122, 0.12); color: #a1a1aa; }
 
-  .row {
+  .metals {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 16px;
   }
-  .card {
-    background: #131316;
+  .metal-card {
+    background: linear-gradient(180deg, #131316 0%, #0e0e10 100%);
     border: 1px solid #1f1f23;
-    border-radius: 16px;
-    padding: 20px;
+    border-radius: 18px;
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
     transition: border-color 0.2s ease;
   }
-  .card:hover { border-color: #2a2a30; }
-  .card-label {
-    color: #71717a;
-    font-size: 12px;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    margin-bottom: 10px;
-    font-weight: 500;
+  .metal-card:hover { border-color: #2a2a30; }
+  .metal-card.gold::before,
+  .metal-card.silver::before {
+    content: '';
+    position: absolute;
+    top: -40%; right: -20%;
+    width: 60%; height: 100%;
+    border-radius: 50%;
+    filter: blur(40px);
+    pointer-events: none;
+    opacity: 0.18;
   }
-  .card-value {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 24px;
+  .metal-card.gold::before   { background: radial-gradient(circle, #facc15, transparent 70%); }
+  .metal-card.silver::before { background: radial-gradient(circle, #d4d4d8, transparent 70%); }
+
+  .metal-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 18px;
+    position: relative;
+  }
+  .metal-name {
+    font-size: 16px;
     font-weight: 700;
     color: #e8e8ea;
+  }
+  .metal-change {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-variant-numeric: tabular-nums;
+  }
+  .up   { background: rgba(34, 197, 94, 0.12); color: #4ade80; }
+  .down { background: rgba(239, 68, 68, 0.12); color: #f87171; }
+  .flat { background: rgba(113, 113, 122, 0.12); color: #a1a1aa; }
+
+  .price-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    position: relative;
+  }
+  .price-block {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .price-label {
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #71717a;
+    font-weight: 500;
+  }
+  .price-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 22px;
+    font-weight: 700;
+    color: #f5f5f7;
     font-variant-numeric: tabular-nums;
     letter-spacing: -0.01em;
+    line-height: 1.1;
   }
-  .card-sub {
+  .price-unit {
+    font-size: 11px;
     color: #52525b;
-    font-size: 12px;
-    margin-top: 4px;
     font-family: 'JetBrains Mono', monospace;
-    font-variant-numeric: tabular-nums;
+    margin-top: 2px;
   }
 
-  .context {
+  .fx {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
+    gap: 14px;
   }
-  .ctx {
-    background: #0e0e10;
-    border: 1px solid #1a1a1e;
-    border-radius: 12px;
-    padding: 14px 16px;
+  .fx-card {
+    background: #131316;
+    border: 1px solid #1f1f23;
+    border-radius: 14px;
+    padding: 18px 20px;
+    transition: border-color 0.2s ease;
   }
-  .ctx-label { color: #52525b; font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 6px; }
-  .ctx-value { font-family: 'JetBrains Mono', monospace; font-size: 15px; font-weight: 600; color: #d4d4d8; font-variant-numeric: tabular-nums; }
-
-  footer {
+  .fx-card:hover { border-color: #2a2a30; }
+  .fx-head {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 10px;
+  }
+  .fx-name { font-size: 13px; font-weight: 600; color: #d4d4d8; letter-spacing: 0.04em; }
+  .fx-flag { font-size: 16px; }
+  .fx-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 22px;
+    font-weight: 700;
+    color: #f5f5f7;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.01em;
+  }
+  .fx-change {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    margin-top: 4px;
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+  }
+  .fx-change.up   { color: #4ade80; background: none; padding: 0; }
+  .fx-change.down { color: #f87171; background: none; padding: 0; }
+  .fx-change.flat { color: #71717a; background: none; padding: 0; }
+
+  .community {
+    background: linear-gradient(180deg, #0e0e10 0%, #131316 100%);
+    border: 1px solid #1f1f23;
+    border-radius: 18px;
+    padding: 28px 24px;
+  }
+  .community h2 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    letter-spacing: -0.01em;
+  }
+  .community p.lead {
+    color: #71717a;
+    font-size: 14px;
+    margin-bottom: 20px;
+    line-height: 1.5;
+  }
+  .form-grid {
+    display: grid;
+    gap: 12px;
+  }
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .field label {
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #71717a;
+    font-weight: 600;
+  }
+  .field input,
+  .field textarea,
+  .field select {
+    background: #0a0a0b;
+    border: 1px solid #27272a;
+    color: #e8e8ea;
+    padding: 10px 14px;
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 14px;
+    transition: border-color 0.15s ease;
+    resize: vertical;
+  }
+  .field input:focus,
+  .field textarea:focus,
+  .field select:focus {
+    outline: none;
+    border-color: #52525b;
+  }
+  .field textarea { min-height: 110px; line-height: 1.5; }
+  .submit-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-top: 6px;
+    flex-wrap: wrap;
+  }
+  .form-hint { font-size: 12px; color: #52525b; }
+  button.submit {
+    background: linear-gradient(180deg, #f5f5f7 0%, #d4d4d8 100%);
+    color: #0a0a0b;
+    border: none;
+    padding: 11px 22px;
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.1s ease, box-shadow 0.15s ease;
+  }
+  button.submit:hover { box-shadow: 0 0 0 4px rgba(212, 212, 216, 0.12); }
+  button.submit:active { transform: scale(0.98); }
+  button.submit:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .form-msg { font-size: 13px; margin-top: 10px; min-height: 18px; }
+  .form-msg.success { color: #4ade80; }
+  .form-msg.error   { color: #f87171; }
+
+  footer {
     color: #52525b;
     font-size: 12px;
-    padding-top: 16px;
-    border-top: 1px solid #1a1a1e;
+    text-align: center;
+    padding-top: 8px;
   }
-  footer a { color: #71717a; text-decoration: none; }
-  footer a:hover { color: #d4d4d8; }
 
-  .loading { color: #52525b; }
-
-  @media (max-width: 480px) {
-    body { padding: 24px 16px; }
-    .hero { padding: 32px 20px; }
-    .row { grid-template-columns: 1fr; }
-    .context { grid-template-columns: 1fr 1fr; }
+  @media (max-width: 640px) {
+    body { padding: 28px 16px 32px; }
+    .wrap { gap: 28px; }
+    .metals, .fx { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
   }
 </style>
 </head>
 <body>
   <div class="wrap">
     <header>
-      <div class="logo"><span class="logo-dot"></span>Gümüş Takip</div>
+      <div class="logo"><span class="logo-dot"></span>Piyasa</div>
       <div class="status">
         <span class="live-dot"></span>
         <span id="last-update">yükleniyor…</span>
       </div>
     </header>
 
-    <section class="hero">
-      <div class="hero-label">Gram Gümüş</div>
-      <div class="hero-price" id="silver-mid"><span class="loading">—</span></div>
-      <div class="hero-unit">Türk Lirası / gram</div>
-      <div class="hero-change change-flat" id="silver-change">—</div>
+    <section>
+      <div class="section-label">Kıymetli Madenler</div>
+      <div class="metals">
+        <article class="metal-card gold">
+          <div class="metal-head">
+            <div class="metal-name">Altın</div>
+            <div class="metal-change flat" id="gold-change">—</div>
+          </div>
+          <div class="price-row">
+            <div class="price-block">
+              <span class="price-label">Gram</span>
+              <span class="price-value" id="gold-gram">—</span>
+              <span class="price-unit">TL</span>
+            </div>
+            <div class="price-block">
+              <span class="price-label">Ons</span>
+              <span class="price-value" id="gold-ounce">—</span>
+              <span class="price-unit">USD</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="metal-card silver">
+          <div class="metal-head">
+            <div class="metal-name">Gümüş</div>
+            <div class="metal-change flat" id="silver-change">—</div>
+          </div>
+          <div class="price-row">
+            <div class="price-block">
+              <span class="price-label">Gram</span>
+              <span class="price-value" id="silver-gram">—</span>
+              <span class="price-unit">TL</span>
+            </div>
+            <div class="price-block">
+              <span class="price-label">Ons</span>
+              <span class="price-value" id="silver-ounce">—</span>
+              <span class="price-unit">USD</span>
+            </div>
+          </div>
+        </article>
+      </div>
     </section>
 
-    <section class="row">
-      <div class="card">
-        <div class="card-label">Alış</div>
-        <div class="card-value" id="silver-buy">—</div>
-        <div class="card-sub">TL / gram</div>
-      </div>
-      <div class="card">
-        <div class="card-label">Satış</div>
-        <div class="card-value" id="silver-sell">—</div>
-        <div class="card-sub">TL / gram</div>
-      </div>
-    </section>
-
-    <section class="context">
-      <div class="ctx">
-        <div class="ctx-label">Gram Altın</div>
-        <div class="ctx-value" id="gold">—</div>
-      </div>
-      <div class="ctx">
-        <div class="ctx-label">Dolar</div>
-        <div class="ctx-value" id="usd">—</div>
-      </div>
-      <div class="ctx">
-        <div class="ctx-label">Euro</div>
-        <div class="ctx-value" id="eur">—</div>
+    <section>
+      <div class="section-label">Döviz</div>
+      <div class="fx">
+        <div class="fx-card">
+          <div class="fx-head"><span class="fx-name">USD / TRY</span><span class="fx-flag">🇺🇸</span></div>
+          <div class="fx-value" id="usd-val">—</div>
+          <div class="fx-change flat" id="usd-change">—</div>
+        </div>
+        <div class="fx-card">
+          <div class="fx-head"><span class="fx-name">EUR / TRY</span><span class="fx-flag">🇪🇺</span></div>
+          <div class="fx-value" id="eur-val">—</div>
+          <div class="fx-change flat" id="eur-change">—</div>
+        </div>
+        <div class="fx-card">
+          <div class="fx-head"><span class="fx-name">GBP / TRY</span><span class="fx-flag">🇬🇧</span></div>
+          <div class="fx-value" id="gbp-val">—</div>
+          <div class="fx-change flat" id="gbp-change">—</div>
+        </div>
       </div>
     </section>
 
-    <footer>
-      <span>Kaynak: truncgil · 30sn'de bir güncellenir</span>
-      <a href="https://gumustakip.com">gumustakip.com</a>
-    </footer>
+    <section class="community">
+      <h2>Topluluk · Günlük Piyasa Yorumları</h2>
+      <p class="lead">Bugünkü gözlemini, beklentini veya işlemini paylaş. Borsa, döviz, altın, gümüş — ne takip ediyorsan yaz.</p>
+
+      <form class="form-grid" id="cform" novalidate>
+        <div class="form-row">
+          <div class="field">
+            <label for="name">Ad / Rumuz (opsiyonel)</label>
+            <input id="name" name="name" type="text" maxlength="40" placeholder="örn: Ahmet">
+          </div>
+          <div class="field">
+            <label for="topic">Konu</label>
+            <select id="topic" name="topic">
+              <option>Genel piyasa</option>
+              <option>Altın</option>
+              <option>Gümüş</option>
+              <option>Döviz</option>
+              <option>Borsa / Hisse</option>
+              <option>Diğer</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label for="message">Yorumun</label>
+          <textarea id="message" name="message" maxlength="1000" required placeholder="Bugün ne gördün, ne düşünüyorsun?"></textarea>
+        </div>
+        <div class="submit-row">
+          <span class="form-hint">Yorumlar moderatör onayından geçer. Yatırım tavsiyesi değildir.</span>
+          <button class="submit" type="submit">Gönder</button>
+        </div>
+        <div class="form-msg" id="form-msg" role="status" aria-live="polite"></div>
+      </form>
+    </section>
+
+    <footer>© 2026 · Bilgi amaçlıdır, yatırım tavsiyesi değildir</footer>
   </div>
 
 <script>
   const fmt = (n, d = 2) => {
-    if (n == null || isNaN(n)) return '—';
+    if (n == null || !isFinite(n)) return '—';
     return new Intl.NumberFormat('tr-TR', { minimumFractionDigits: d, maximumFractionDigits: d }).format(n);
   };
   const parseNum = (v) => {
@@ -265,36 +432,58 @@
     if (typeof v !== 'string') return NaN;
     return parseFloat(v.replace(/\./g, '').replace(',', '.'));
   };
-
   const $ = (id) => document.getElementById(id);
+  const TROY_OUNCE_G = 31.1034768;
+
+  function changeClass(c) { return c > 0 ? 'up' : c < 0 ? 'down' : 'flat'; }
+  function changeText(c) {
+    if (c == null || !isFinite(c)) return '—';
+    const arrow = c > 0 ? '▲' : c < 0 ? '▼' : '◆';
+    return `${arrow} ${fmt(Math.abs(c), 2)}%`;
+  }
+  function setChange(id, c, baseClass) {
+    const el = $(id);
+    el.className = `${baseClass} ${changeClass(c)}`;
+    el.textContent = changeText(c);
+  }
 
   async function load() {
     try {
       const res = await fetch('https://finans.truncgil.com/v4/today.json', { cache: 'no-store' });
-      const data = await res.json();
+      const d = await res.json();
 
-      const silver = data.GUMUS || data.gumus || {};
-      const gold   = data.GRA   || data.gram_altin || {};
-      const usd    = data.USD   || {};
-      const eur    = data.EUR   || {};
+      const silver = d.GUMUS || {};
+      const gold   = d.GRA   || {};
+      const ons    = d.ONS   || {};
+      const usd    = d.USD   || {};
+      const eur    = d.EUR   || {};
+      const gbp    = d.GBP   || {};
 
-      const buy  = parseNum(silver.Alış ?? silver.Buying ?? silver.buying);
-      const sell = parseNum(silver.Satış ?? silver.Selling ?? silver.selling);
-      const change = parseNum(silver['Değişim'] ?? silver.change ?? silver.Change);
-      const mid = (buy + sell) / 2;
+      const usdSell = parseNum(usd['Satış'] ?? usd.Selling);
 
-      $('silver-mid').textContent  = fmt(mid);
-      $('silver-buy').textContent  = fmt(buy);
-      $('silver-sell').textContent = fmt(sell);
+      const silverGram = parseNum(silver['Satış'] ?? silver.Selling);
+      const goldGram   = parseNum(gold['Satış']   ?? gold.Selling);
 
-      const el = $('silver-change');
-      el.className = 'hero-change ' + (change > 0 ? 'change-up' : change < 0 ? 'change-down' : 'change-flat');
-      const arrow = change > 0 ? '▲' : change < 0 ? '▼' : '◆';
-      el.textContent = `${arrow} ${fmt(Math.abs(change), 2)}%  bugün`;
+      let goldOnce = parseNum(ons['Satış'] ?? ons.Selling);
+      if (!goldOnce || goldOnce === 0) {
+        goldOnce = (goldGram * TROY_OUNCE_G) / usdSell;
+      }
+      const silverOnce = (silverGram * TROY_OUNCE_G) / usdSell;
 
-      $('gold').textContent = fmt(parseNum(gold.Satış ?? gold.Selling), 0) + ' ₺';
-      $('usd').textContent  = fmt(parseNum(usd.Satış ?? usd.Selling), 2) + ' ₺';
-      $('eur').textContent  = fmt(parseNum(eur.Satış ?? eur.Selling), 2) + ' ₺';
+      $('gold-gram').textContent   = fmt(goldGram, 2);
+      $('gold-ounce').textContent  = fmt(goldOnce, 2);
+      $('silver-gram').textContent = fmt(silverGram, 2);
+      $('silver-ounce').textContent= fmt(silverOnce, 2);
+
+      setChange('gold-change',   parseNum(gold['Değişim']   ?? gold.Change),   'metal-change');
+      setChange('silver-change', parseNum(silver['Değişim'] ?? silver.Change), 'metal-change');
+
+      $('usd-val').textContent = fmt(usdSell, 4);
+      $('eur-val').textContent = fmt(parseNum(eur['Satış'] ?? eur.Selling), 4);
+      $('gbp-val').textContent = fmt(parseNum(gbp['Satış'] ?? gbp.Selling), 4);
+      setChange('usd-change', parseNum(usd['Değişim'] ?? usd.Change), 'fx-change');
+      setChange('eur-change', parseNum(eur['Değişim'] ?? eur.Change), 'fx-change');
+      setChange('gbp-change', parseNum(gbp['Değişim'] ?? gbp.Change), 'fx-change');
 
       const now = new Date();
       const hh = String(now.getHours()).padStart(2, '0');
@@ -308,6 +497,54 @@
 
   load();
   setInterval(load, 30_000);
+
+  // ---- Community form ----
+  // To activate: sign up at https://formspree.io (free), create a form,
+  // paste the endpoint ID below (replace YOUR_FORM_ID).
+  const FORMSPREE_ENDPOINT = 'https://formspree.io/f/YOUR_FORM_ID';
+
+  $('cform').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const msgEl = $('form-msg');
+    const btn = e.target.querySelector('button.submit');
+    const data = {
+      name:    $('name').value.trim(),
+      topic:   $('topic').value,
+      message: $('message').value.trim(),
+    };
+    if (!data.message) {
+      msgEl.className = 'form-msg error';
+      msgEl.textContent = 'Yorum boş olamaz.';
+      return;
+    }
+    if (FORMSPREE_ENDPOINT.includes('YOUR_FORM_ID')) {
+      msgEl.className = 'form-msg error';
+      msgEl.textContent = 'Form henüz aktif değil — Formspree kurulumu bekliyor.';
+      return;
+    }
+    btn.disabled = true;
+    msgEl.className = 'form-msg';
+    msgEl.textContent = 'Gönderiliyor…';
+    try {
+      const res = await fetch(FORMSPREE_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(data),
+      });
+      if (res.ok) {
+        msgEl.className = 'form-msg success';
+        msgEl.textContent = 'Teşekkürler — yorumun alındı.';
+        e.target.reset();
+      } else {
+        throw new Error('http ' + res.status);
+      }
+    } catch (err) {
+      msgEl.className = 'form-msg error';
+      msgEl.textContent = 'Gönderim hatası. Tekrar dener misin?';
+    } finally {
+      btn.disabled = false;
+    }
+  });
 </script>
 </body>
 </html>
