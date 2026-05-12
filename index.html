@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gümüş Takip — Canlı Gümüş Fiyatı</title>
+<meta name="description" content="Türkiye'de gram gümüş alış/satış fiyatı, canlı takip. Sade ve hızlı.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    background: #0a0a0b;
+    color: #e8e8ea;
+    font-family: 'Inter', -apple-system, system-ui, sans-serif;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 48px 20px 32px;
+  }
+  .wrap {
+    width: 100%;
+    max-width: 720px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: -0.01em;
+  }
+  .logo-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #d4d4d8 0%, #a1a1aa 100%);
+    box-shadow: 0 0 12px rgba(212, 212, 216, 0.4);
+  }
+  .status {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: #71717a;
+    font-variant-numeric: tabular-nums;
+  }
+  .live-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #22c55e;
+    box-shadow: 0 0 8px rgba(34, 197, 94, 0.6);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .hero {
+    background: linear-gradient(180deg, #131316 0%, #0e0e10 100%);
+    border: 1px solid #1f1f23;
+    border-radius: 20px;
+    padding: 40px 32px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: 50%;
+    transform: translateX(-50%);
+    width: 80%; height: 100%;
+    background: radial-gradient(ellipse at center, rgba(212, 212, 216, 0.08) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .hero-label {
+    color: #71717a;
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+  .hero-price {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: clamp(48px, 10vw, 72px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, #ffffff 0%, #a1a1aa 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+  .hero-unit {
+    color: #71717a;
+    font-size: 14px;
+    margin-top: 12px;
+    font-weight: 500;
+  }
+  .hero-change {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 16px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: 'JetBrains Mono', monospace;
+    font-variant-numeric: tabular-nums;
+  }
+  .change-up   { background: rgba(34, 197, 94, 0.12); color: #4ade80; }
+  .change-down { background: rgba(239, 68, 68, 0.12); color: #f87171; }
+  .change-flat { background: rgba(113, 113, 122, 0.12); color: #a1a1aa; }
+
+  .row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .card {
+    background: #131316;
+    border: 1px solid #1f1f23;
+    border-radius: 16px;
+    padding: 20px;
+    transition: border-color 0.2s ease;
+  }
+  .card:hover { border-color: #2a2a30; }
+  .card-label {
+    color: #71717a;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    font-weight: 500;
+  }
+  .card-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 24px;
+    font-weight: 700;
+    color: #e8e8ea;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.01em;
+  }
+  .card-sub {
+    color: #52525b;
+    font-size: 12px;
+    margin-top: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .context {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  .ctx {
+    background: #0e0e10;
+    border: 1px solid #1a1a1e;
+    border-radius: 12px;
+    padding: 14px 16px;
+  }
+  .ctx-label { color: #52525b; font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 6px; }
+  .ctx-value { font-family: 'JetBrains Mono', monospace; font-size: 15px; font-weight: 600; color: #d4d4d8; font-variant-numeric: tabular-nums; }
+
+  footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #52525b;
+    font-size: 12px;
+    padding-top: 16px;
+    border-top: 1px solid #1a1a1e;
+  }
+  footer a { color: #71717a; text-decoration: none; }
+  footer a:hover { color: #d4d4d8; }
+
+  .loading { color: #52525b; }
+
+  @media (max-width: 480px) {
+    body { padding: 24px 16px; }
+    .hero { padding: 32px 20px; }
+    .row { grid-template-columns: 1fr; }
+    .context { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="logo"><span class="logo-dot"></span>Gümüş Takip</div>
+      <div class="status">
+        <span class="live-dot"></span>
+        <span id="last-update">yükleniyor…</span>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-label">Gram Gümüş</div>
+      <div class="hero-price" id="silver-mid"><span class="loading">—</span></div>
+      <div class="hero-unit">Türk Lirası / gram</div>
+      <div class="hero-change change-flat" id="silver-change">—</div>
+    </section>
+
+    <section class="row">
+      <div class="card">
+        <div class="card-label">Alış</div>
+        <div class="card-value" id="silver-buy">—</div>
+        <div class="card-sub">TL / gram</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Satış</div>
+        <div class="card-value" id="silver-sell">—</div>
+        <div class="card-sub">TL / gram</div>
+      </div>
+    </section>
+
+    <section class="context">
+      <div class="ctx">
+        <div class="ctx-label">Gram Altın</div>
+        <div class="ctx-value" id="gold">—</div>
+      </div>
+      <div class="ctx">
+        <div class="ctx-label">Dolar</div>
+        <div class="ctx-value" id="usd">—</div>
+      </div>
+      <div class="ctx">
+        <div class="ctx-label">Euro</div>
+        <div class="ctx-value" id="eur">—</div>
+      </div>
+    </section>
+
+    <footer>
+      <span>Kaynak: truncgil · 30sn'de bir güncellenir</span>
+      <a href="https://gumustakip.com">gumustakip.com</a>
+    </footer>
+  </div>
+
+<script>
+  const fmt = (n, d = 2) => {
+    if (n == null || isNaN(n)) return '—';
+    return new Intl.NumberFormat('tr-TR', { minimumFractionDigits: d, maximumFractionDigits: d }).format(n);
+  };
+  const parseNum = (v) => {
+    if (typeof v === 'number') return v;
+    if (typeof v !== 'string') return NaN;
+    return parseFloat(v.replace(/\./g, '').replace(',', '.'));
+  };
+
+  const $ = (id) => document.getElementById(id);
+
+  async function load() {
+    try {
+      const res = await fetch('https://finans.truncgil.com/v4/today.json', { cache: 'no-store' });
+      const data = await res.json();
+
+      const silver = data.GUMUS || data.gumus || {};
+      const gold   = data.GRA   || data.gram_altin || {};
+      const usd    = data.USD   || {};
+      const eur    = data.EUR   || {};
+
+      const buy  = parseNum(silver.Alış ?? silver.Buying ?? silver.buying);
+      const sell = parseNum(silver.Satış ?? silver.Selling ?? silver.selling);
+      const change = parseNum(silver['Değişim'] ?? silver.change ?? silver.Change);
+      const mid = (buy + sell) / 2;
+
+      $('silver-mid').textContent  = fmt(mid);
+      $('silver-buy').textContent  = fmt(buy);
+      $('silver-sell').textContent = fmt(sell);
+
+      const el = $('silver-change');
+      el.className = 'hero-change ' + (change > 0 ? 'change-up' : change < 0 ? 'change-down' : 'change-flat');
+      const arrow = change > 0 ? '▲' : change < 0 ? '▼' : '◆';
+      el.textContent = `${arrow} ${fmt(Math.abs(change), 2)}%  bugün`;
+
+      $('gold').textContent = fmt(parseNum(gold.Satış ?? gold.Selling), 0) + ' ₺';
+      $('usd').textContent  = fmt(parseNum(usd.Satış ?? usd.Selling), 2) + ' ₺';
+      $('eur').textContent  = fmt(parseNum(eur.Satış ?? eur.Selling), 2) + ' ₺';
+
+      const now = new Date();
+      const hh = String(now.getHours()).padStart(2, '0');
+      const mm = String(now.getMinutes()).padStart(2, '0');
+      $('last-update').textContent = `Canlı · ${hh}:${mm}`;
+    } catch (e) {
+      $('last-update').textContent = 'bağlantı hatası';
+      console.error(e);
+    }
+  }
+
+  load();
+  setInterval(load, 30_000);
+</script>
+</body>
+</html>
