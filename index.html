@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Piyasa — Canlı Altın, Gümüş, Döviz</title>
-<meta name="description" content="Altın, gümüş, dolar, euro, sterlin — canlı piyasa fiyatları. Sade ve hızlı.">
+<title>Piyasa — Canlı Altın, Gümüş, Döviz · Topluluk</title>
+<meta name="description" content="Altın, gümüş, dolar, euro, sterlin canlı fiyatları. Toplulukla piyasa yorumları ve günlük haberler.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
@@ -67,10 +67,7 @@
     box-shadow: 0 0 8px rgba(34, 197, 94, 0.6);
     animation: pulse 2s ease-in-out infinite;
   }
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.4; }
-  }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
 
   .section-label {
     font-size: 12px;
@@ -80,12 +77,22 @@
     font-weight: 600;
     margin-bottom: 16px;
   }
-
-  .metals {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
+  .section-h {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+    gap: 8px;
   }
+  .section-h h2 {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  .section-h .sub { color: #71717a; font-size: 13px; }
+
+  .metals { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
   .metal-card {
     background: linear-gradient(180deg, #131316 0%, #0e0e10 100%);
     border: 1px solid #1f1f23;
@@ -117,11 +124,7 @@
     margin-bottom: 18px;
     position: relative;
   }
-  .metal-name {
-    font-size: 16px;
-    font-weight: 700;
-    color: #e8e8ea;
-  }
+  .metal-name { font-size: 16px; font-weight: 700; color: #e8e8ea; }
   .metal-change {
     font-family: 'JetBrains Mono', monospace;
     font-size: 12px;
@@ -134,17 +137,8 @@
   .down { background: rgba(239, 68, 68, 0.12); color: #f87171; }
   .flat { background: rgba(113, 113, 122, 0.12); color: #a1a1aa; }
 
-  .price-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 14px;
-    position: relative;
-  }
-  .price-block {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
+  .price-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; position: relative; }
+  .price-block { display: flex; flex-direction: column; gap: 4px; }
   .price-label {
     font-size: 11px;
     letter-spacing: 0.04em;
@@ -161,18 +155,9 @@
     letter-spacing: -0.01em;
     line-height: 1.1;
   }
-  .price-unit {
-    font-size: 11px;
-    color: #52525b;
-    font-family: 'JetBrains Mono', monospace;
-    margin-top: 2px;
-  }
+  .price-unit { font-size: 11px; color: #52525b; font-family: 'JetBrains Mono', monospace; margin-top: 2px; }
 
-  .fx {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 14px;
-  }
+  .fx { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
   .fx-card {
     background: #131316;
     border: 1px solid #1f1f23;
@@ -181,12 +166,7 @@
     transition: border-color 0.2s ease;
   }
   .fx-card:hover { border-color: #2a2a30; }
-  .fx-head {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-  }
+  .fx-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
   .fx-name { font-size: 13px; font-weight: 600; color: #d4d4d8; letter-spacing: 0.04em; }
   .fx-flag { font-size: 16px; }
   .fx-value {
@@ -197,49 +177,23 @@
     font-variant-numeric: tabular-nums;
     letter-spacing: -0.01em;
   }
-  .fx-change {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    margin-top: 4px;
-    font-variant-numeric: tabular-nums;
-    font-weight: 600;
-  }
+  .fx-change { font-family: 'JetBrains Mono', monospace; font-size: 11px; margin-top: 4px; font-variant-numeric: tabular-nums; font-weight: 600; }
   .fx-change.up   { color: #4ade80; background: none; padding: 0; }
   .fx-change.down { color: #f87171; background: none; padding: 0; }
   .fx-change.flat { color: #71717a; background: none; padding: 0; }
 
+  /* Community */
   .community {
     background: linear-gradient(180deg, #0e0e10 0%, #131316 100%);
     border: 1px solid #1f1f23;
     border-radius: 18px;
     padding: 28px 24px;
   }
-  .community h2 {
-    font-size: 18px;
-    font-weight: 700;
-    margin-bottom: 6px;
-    letter-spacing: -0.01em;
-  }
-  .community p.lead {
-    color: #71717a;
-    font-size: 14px;
-    margin-bottom: 20px;
-    line-height: 1.5;
-  }
-  .form-grid {
-    display: grid;
-    gap: 12px;
-  }
-  .form-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-  }
-  .field {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
+  .community h2 { font-size: 18px; font-weight: 700; margin-bottom: 6px; letter-spacing: -0.01em; }
+  .community p.lead { color: #71717a; font-size: 14px; margin-bottom: 20px; line-height: 1.5; }
+  .form-grid { display: grid; gap: 12px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .field { display: flex; flex-direction: column; gap: 6px; }
   .field label {
     font-size: 11px;
     letter-spacing: 0.04em;
@@ -260,12 +214,7 @@
     transition: border-color 0.15s ease;
     resize: vertical;
   }
-  .field input:focus,
-  .field textarea:focus,
-  .field select:focus {
-    outline: none;
-    border-color: #52525b;
-  }
+  .field input:focus, .field textarea:focus, .field select:focus { outline: none; border-color: #52525b; }
   .field textarea { min-height: 110px; line-height: 1.5; }
   .submit-row {
     display: flex;
@@ -296,12 +245,111 @@
   .form-msg.success { color: #4ade80; }
   .form-msg.error   { color: #f87171; }
 
-  footer {
-    color: #52525b;
-    font-size: 12px;
-    text-align: center;
-    padding-top: 8px;
+  /* Comments list */
+  .filters {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 18px;
   }
+  .filter-pill {
+    background: #131316;
+    border: 1px solid #1f1f23;
+    color: #a1a1aa;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    font-family: inherit;
+  }
+  .filter-pill:hover { border-color: #2a2a30; color: #d4d4d8; }
+  .filter-pill.active {
+    background: #e8e8ea;
+    color: #0a0a0b;
+    border-color: #e8e8ea;
+  }
+  .comments { display: flex; flex-direction: column; gap: 12px; }
+  .comment-empty { color: #52525b; font-size: 13px; padding: 24px 0; text-align: center; }
+  .comment {
+    background: #0e0e10;
+    border: 1px solid #1a1a1e;
+    border-radius: 14px;
+    padding: 16px 18px;
+    transition: border-color 0.15s ease;
+  }
+  .comment:hover { border-color: #27272a; }
+  .comment-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+  }
+  .avatar {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #3f3f46 0%, #27272a 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    color: #d4d4d8;
+    flex-shrink: 0;
+  }
+  .comment-name { font-size: 14px; font-weight: 600; color: #e8e8ea; }
+  .comment-topic {
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: #1f1f23;
+    color: #a1a1aa;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .comment-time { font-size: 11px; color: #52525b; margin-left: auto; font-variant-numeric: tabular-nums; }
+  .comment-body { color: #d4d4d8; font-size: 14px; line-height: 1.55; white-space: pre-wrap; word-wrap: break-word; }
+
+  /* News */
+  .news { display: flex; flex-direction: column; gap: 12px; }
+  .news-card {
+    background: #131316;
+    border: 1px solid #1f1f23;
+    border-radius: 14px;
+    padding: 18px 20px;
+    transition: border-color 0.15s ease;
+    display: block;
+    text-decoration: none;
+    color: inherit;
+  }
+  .news-card:hover { border-color: #3f3f46; }
+  .news-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+  }
+  .news-tag {
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: rgba(74, 222, 128, 0.12);
+    color: #4ade80;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .news-tag.analiz { background: rgba(212, 212, 216, 0.12); color: #d4d4d8; }
+  .news-tag.haber  { background: rgba(96, 165, 250, 0.12); color: #60a5fa; }
+  .news-date { font-size: 11px; color: #52525b; font-variant-numeric: tabular-nums; margin-left: auto; }
+  .news-title { font-size: 15px; font-weight: 700; color: #f5f5f7; margin-bottom: 4px; letter-spacing: -0.01em; }
+  .news-summary { color: #a1a1aa; font-size: 13px; line-height: 1.5; }
+
+  footer { color: #52525b; font-size: 12px; text-align: center; padding-top: 8px; }
 
   @media (max-width: 640px) {
     body { padding: 28px 16px 32px; }
@@ -330,35 +378,18 @@
             <div class="metal-change flat" id="gold-change">—</div>
           </div>
           <div class="price-row">
-            <div class="price-block">
-              <span class="price-label">Gram</span>
-              <span class="price-value" id="gold-gram">—</span>
-              <span class="price-unit">TL</span>
-            </div>
-            <div class="price-block">
-              <span class="price-label">Ons</span>
-              <span class="price-value" id="gold-ounce">—</span>
-              <span class="price-unit">USD</span>
-            </div>
+            <div class="price-block"><span class="price-label">Gram</span><span class="price-value" id="gold-gram">—</span><span class="price-unit">TL</span></div>
+            <div class="price-block"><span class="price-label">Ons</span><span class="price-value" id="gold-ounce">—</span><span class="price-unit">USD</span></div>
           </div>
         </article>
-
         <article class="metal-card silver">
           <div class="metal-head">
             <div class="metal-name">Gümüş</div>
             <div class="metal-change flat" id="silver-change">—</div>
           </div>
           <div class="price-row">
-            <div class="price-block">
-              <span class="price-label">Gram</span>
-              <span class="price-value" id="silver-gram">—</span>
-              <span class="price-unit">TL</span>
-            </div>
-            <div class="price-block">
-              <span class="price-label">Ons</span>
-              <span class="price-value" id="silver-ounce">—</span>
-              <span class="price-unit">USD</span>
-            </div>
+            <div class="price-block"><span class="price-label">Gram</span><span class="price-value" id="silver-gram">—</span><span class="price-unit">TL</span></div>
+            <div class="price-block"><span class="price-label">Ons</span><span class="price-value" id="silver-ounce">—</span><span class="price-unit">USD</span></div>
           </div>
         </article>
       </div>
@@ -367,27 +398,15 @@
     <section>
       <div class="section-label">Döviz</div>
       <div class="fx">
-        <div class="fx-card">
-          <div class="fx-head"><span class="fx-name">USD / TRY</span><span class="fx-flag">🇺🇸</span></div>
-          <div class="fx-value" id="usd-val">—</div>
-          <div class="fx-change flat" id="usd-change">—</div>
-        </div>
-        <div class="fx-card">
-          <div class="fx-head"><span class="fx-name">EUR / TRY</span><span class="fx-flag">🇪🇺</span></div>
-          <div class="fx-value" id="eur-val">—</div>
-          <div class="fx-change flat" id="eur-change">—</div>
-        </div>
-        <div class="fx-card">
-          <div class="fx-head"><span class="fx-name">GBP / TRY</span><span class="fx-flag">🇬🇧</span></div>
-          <div class="fx-value" id="gbp-val">—</div>
-          <div class="fx-change flat" id="gbp-change">—</div>
-        </div>
+        <div class="fx-card"><div class="fx-head"><span class="fx-name">USD / TRY</span><span class="fx-flag">🇺🇸</span></div><div class="fx-value" id="usd-val">—</div><div class="fx-change flat" id="usd-change">—</div></div>
+        <div class="fx-card"><div class="fx-head"><span class="fx-name">EUR / TRY</span><span class="fx-flag">🇪🇺</span></div><div class="fx-value" id="eur-val">—</div><div class="fx-change flat" id="eur-change">—</div></div>
+        <div class="fx-card"><div class="fx-head"><span class="fx-name">GBP / TRY</span><span class="fx-flag">🇬🇧</span></div><div class="fx-value" id="gbp-val">—</div><div class="fx-change flat" id="gbp-change">—</div></div>
       </div>
     </section>
 
     <section class="community">
-      <h2>Topluluk · Günlük Piyasa Yorumları</h2>
-      <p class="lead">Bugünkü gözlemini, beklentini veya işlemini paylaş. Borsa, döviz, altın, gümüş — ne takip ediyorsan yaz.</p>
+      <h2>Topluluk · Yorumunu Paylaş</h2>
+      <p class="lead">Bugünkü gözlemini, beklentini veya işlemini yaz. Yorumlar anında siteye düşer, herkes görür.</p>
 
       <form class="form-grid" id="cform" novalidate>
         <div class="form-row">
@@ -403,7 +422,6 @@
               <option>Gümüş</option>
               <option>Döviz</option>
               <option>Borsa / Hisse</option>
-              <option>Diğer</option>
             </select>
           </div>
         </div>
@@ -412,17 +430,86 @@
           <textarea id="message" name="message" maxlength="1000" required placeholder="Bugün ne gördün, ne düşünüyorsun?"></textarea>
         </div>
         <div class="submit-row">
-          <span class="form-hint">Yorumlar moderatör onayından geçer. Yatırım tavsiyesi değildir.</span>
+          <span class="form-hint">Yorumlar herkese açıktır. Yatırım tavsiyesi değildir.</span>
           <button class="submit" type="submit">Gönder</button>
         </div>
         <div class="form-msg" id="form-msg" role="status" aria-live="polite"></div>
       </form>
     </section>
 
+    <section>
+      <div class="section-h">
+        <h2>Topluluk Yorumları</h2>
+        <span class="sub" id="comments-count">—</span>
+      </div>
+      <div class="filters" id="filters">
+        <button class="filter-pill active" data-topic="">Hepsi</button>
+        <button class="filter-pill" data-topic="Genel piyasa">Genel</button>
+        <button class="filter-pill" data-topic="Altın">Altın</button>
+        <button class="filter-pill" data-topic="Gümüş">Gümüş</button>
+        <button class="filter-pill" data-topic="Döviz">Döviz</button>
+        <button class="filter-pill" data-topic="Borsa / Hisse">Borsa</button>
+      </div>
+      <div class="comments" id="comments">
+        <div class="comment-empty">Yorumlar yükleniyor…</div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-h">
+        <h2>Haberler & Analizler</h2>
+        <span class="sub">Güncel piyasa içerikleri</span>
+      </div>
+      <div class="news">
+        <a class="news-card" href="#" onclick="return false">
+          <div class="news-head">
+            <span class="news-tag analiz">Analiz</span>
+            <span class="news-date">—</span>
+          </div>
+          <div class="news-title">İlk analiz yazın yakında</div>
+          <div class="news-summary">Bu alana kendi günlük analiz/haberlerinizi ekleyebilirsiniz. Şablon hazır.</div>
+        </a>
+        <a class="news-card" href="#" onclick="return false">
+          <div class="news-head">
+            <span class="news-tag haber">Haber</span>
+            <span class="news-date">—</span>
+          </div>
+          <div class="news-title">Haber başlığı örneği</div>
+          <div class="news-summary">Burada bir haber özeti yer alır. Kaynağa link verebilirsiniz.</div>
+        </a>
+      </div>
+    </section>
+
     <footer>© 2026 · Bilgi amaçlıdır, yatırım tavsiyesi değildir</footer>
   </div>
 
-<script>
+<script type="module">
+  // ============ Firebase setup ============
+  // To activate comments display: create a Firebase project (free), enable
+  // Firestore, register a web app, then paste the config below.
+  // Steps documented separately.
+  const FIREBASE_CONFIG = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_PROJECT.firebaseapp.com",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_PROJECT.appspot.com",
+    messagingSenderId: "YOUR_SENDER_ID",
+    appId: "YOUR_APP_ID",
+  };
+  const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xlgzzpyw';
+  const FB_ACTIVE = !FIREBASE_CONFIG.apiKey.startsWith('YOUR_');
+
+  let db = null;
+  if (FB_ACTIVE) {
+    const { initializeApp } = await import("https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js");
+    const fs = await import("https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js");
+    const app = initializeApp(FIREBASE_CONFIG);
+    db = fs.getFirestore(app);
+    window._fs = fs;
+    window._db = db;
+  }
+
+  // ============ Prices ============
   const fmt = (n, d = 2) => {
     if (n == null || !isFinite(n)) return '—';
     return new Intl.NumberFormat('tr-TR', { minimumFractionDigits: d, maximumFractionDigits: d }).format(n);
@@ -434,47 +521,36 @@
   };
   const $ = (id) => document.getElementById(id);
   const TROY_OUNCE_G = 31.1034768;
-
-  function changeClass(c) { return c > 0 ? 'up' : c < 0 ? 'down' : 'flat'; }
-  function changeText(c) {
+  const changeClass = (c) => c > 0 ? 'up' : c < 0 ? 'down' : 'flat';
+  const changeText = (c) => {
     if (c == null || !isFinite(c)) return '—';
     const arrow = c > 0 ? '▲' : c < 0 ? '▼' : '◆';
     return `${arrow} ${fmt(Math.abs(c), 2)}%`;
-  }
-  function setChange(id, c, baseClass) {
+  };
+  const setChange = (id, c, base) => {
     const el = $(id);
-    el.className = `${baseClass} ${changeClass(c)}`;
+    el.className = `${base} ${changeClass(c)}`;
     el.textContent = changeText(c);
-  }
+  };
 
-  async function load() {
+  async function loadPrices() {
     try {
       const res = await fetch('https://finans.truncgil.com/v4/today.json', { cache: 'no-store' });
       const d = await res.json();
-
-      const silver = d.GUMUS || {};
-      const gold   = d.GRA   || {};
-      const ons    = d.ONS   || {};
-      const usd    = d.USD   || {};
-      const eur    = d.EUR   || {};
-      const gbp    = d.GBP   || {};
+      const silver = d.GUMUS || {}, gold = d.GRA || {}, ons = d.ONS || {};
+      const usd = d.USD || {}, eur = d.EUR || {}, gbp = d.GBP || {};
 
       const usdSell = parseNum(usd['Satış'] ?? usd.Selling);
-
       const silverGram = parseNum(silver['Satış'] ?? silver.Selling);
-      const goldGram   = parseNum(gold['Satış']   ?? gold.Selling);
-
+      const goldGram = parseNum(gold['Satış'] ?? gold.Selling);
       let goldOnce = parseNum(ons['Satış'] ?? ons.Selling);
-      if (!goldOnce || goldOnce === 0) {
-        goldOnce = (goldGram * TROY_OUNCE_G) / usdSell;
-      }
+      if (!goldOnce || goldOnce === 0) goldOnce = (goldGram * TROY_OUNCE_G) / usdSell;
       const silverOnce = (silverGram * TROY_OUNCE_G) / usdSell;
 
-      $('gold-gram').textContent   = fmt(goldGram, 2);
-      $('gold-ounce').textContent  = fmt(goldOnce, 2);
+      $('gold-gram').textContent = fmt(goldGram, 2);
+      $('gold-ounce').textContent = fmt(goldOnce, 2);
       $('silver-gram').textContent = fmt(silverGram, 2);
-      $('silver-ounce').textContent= fmt(silverOnce, 2);
-
+      $('silver-ounce').textContent = fmt(silverOnce, 2);
       setChange('gold-change',   parseNum(gold['Değişim']   ?? gold.Change),   'metal-change');
       setChange('silver-change', parseNum(silver['Değişim'] ?? silver.Change), 'metal-change');
 
@@ -486,61 +562,135 @@
       setChange('gbp-change', parseNum(gbp['Değişim'] ?? gbp.Change), 'fx-change');
 
       const now = new Date();
-      const hh = String(now.getHours()).padStart(2, '0');
-      const mm = String(now.getMinutes()).padStart(2, '0');
-      $('last-update').textContent = `Canlı · ${hh}:${mm}`;
+      $('last-update').textContent = `Canlı · ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
     } catch (e) {
       $('last-update').textContent = 'bağlantı hatası';
       console.error(e);
     }
   }
+  loadPrices();
+  setInterval(loadPrices, 30_000);
 
-  load();
-  setInterval(load, 30_000);
+  // ============ Comments ============
+  let activeFilter = '';
+  let allComments = [];
 
-  // ---- Community form ----
-  // To activate: sign up at https://formspree.io (free), create a form,
-  // paste the endpoint ID below (replace YOUR_FORM_ID).
-  const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xlgzzpyw';
+  function timeAgo(ts) {
+    if (!ts) return '';
+    const date = ts.toDate ? ts.toDate() : new Date(ts);
+    const diff = (Date.now() - date.getTime()) / 1000;
+    if (diff < 60) return 'şimdi';
+    if (diff < 3600) return `${Math.floor(diff/60)} dk önce`;
+    if (diff < 86400) return `${Math.floor(diff/3600)} saat önce`;
+    if (diff < 604800) return `${Math.floor(diff/86400)} gün önce`;
+    return date.toLocaleDateString('tr-TR');
+  }
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+  function initial(name) {
+    const n = (name || 'Anonim').trim();
+    return n.charAt(0).toUpperCase() || '?';
+  }
 
+  function renderComments() {
+    const list = activeFilter ? allComments.filter(c => c.topic === activeFilter) : allComments;
+    const root = $('comments');
+    $('comments-count').textContent = `${list.length} yorum`;
+    if (list.length === 0) {
+      root.innerHTML = '<div class="comment-empty">' + (FB_ACTIVE ? 'Henüz yorum yok. İlk sen yaz.' : 'Yorumlar Firebase kurulumu bekliyor.') + '</div>';
+      return;
+    }
+    root.innerHTML = list.map(c => `
+      <article class="comment">
+        <div class="comment-head">
+          <div class="avatar">${escapeHtml(initial(c.name))}</div>
+          <div class="comment-name">${escapeHtml(c.name || 'Anonim')}</div>
+          <div class="comment-topic">${escapeHtml(c.topic || '')}</div>
+          <div class="comment-time">${escapeHtml(timeAgo(c.timestamp))}</div>
+        </div>
+        <div class="comment-body">${escapeHtml(c.message)}</div>
+      </article>
+    `).join('');
+  }
+
+  document.querySelectorAll('.filter-pill').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-pill').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeFilter = btn.dataset.topic;
+      renderComments();
+    });
+  });
+
+  if (FB_ACTIVE) {
+    const { collection, query, orderBy, limit, onSnapshot } = window._fs;
+    const q = query(collection(db, 'comments'), orderBy('timestamp', 'desc'), limit(100));
+    onSnapshot(q, (snap) => {
+      allComments = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+      renderComments();
+    }, (err) => {
+      console.error('Firestore listen error', err);
+      $('comments').innerHTML = '<div class="comment-empty">Yorumlar yüklenirken hata oluştu.</div>';
+    });
+  } else {
+    renderComments();
+  }
+
+  // ============ Form submit ============
   $('cform').addEventListener('submit', async (e) => {
     e.preventDefault();
     const msgEl = $('form-msg');
     const btn = e.target.querySelector('button.submit');
     const data = {
-      name:    $('name').value.trim(),
+      name:    ($('name').value || '').trim().slice(0, 40),
       topic:   $('topic').value,
-      message: $('message').value.trim(),
+      message: ($('message').value || '').trim(),
     };
     if (!data.message) {
       msgEl.className = 'form-msg error';
       msgEl.textContent = 'Yorum boş olamaz.';
       return;
     }
-    if (FORMSPREE_ENDPOINT.includes('YOUR_FORM_ID')) {
-      msgEl.className = 'form-msg error';
-      msgEl.textContent = 'Form henüz aktif değil — Formspree kurulumu bekliyor.';
-      return;
-    }
+
     btn.disabled = true;
     msgEl.className = 'form-msg';
     msgEl.textContent = 'Gönderiliyor…';
+
+    const tasks = [];
+
+    // 1. Formspree (email notification)
+    tasks.push(fetch(FORMSPREE_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(data),
+    }).catch(err => ({ error: err })));
+
+    // 2. Firestore (public storage)
+    if (FB_ACTIVE) {
+      const { addDoc, collection, serverTimestamp } = window._fs;
+      tasks.push(addDoc(collection(db, 'comments'), {
+        name: data.name,
+        topic: data.topic,
+        message: data.message,
+        timestamp: serverTimestamp(),
+      }).catch(err => ({ error: err })));
+    }
+
     try {
-      const res = await fetch(FORMSPREE_ENDPOINT, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify(data),
-      });
-      if (res.ok) {
+      const results = await Promise.all(tasks);
+      const ok = results.every(r => !r.error);
+      if (ok) {
         msgEl.className = 'form-msg success';
-        msgEl.textContent = 'Teşekkürler — yorumun alındı.';
+        msgEl.textContent = 'Teşekkürler — yorumun yayınlandı.';
         e.target.reset();
       } else {
-        throw new Error('http ' + res.status);
+        throw new Error('partial failure');
       }
     } catch (err) {
       msgEl.className = 'form-msg error';
       msgEl.textContent = 'Gönderim hatası. Tekrar dener misin?';
+      console.error(err);
     } finally {
       btn.disabled = false;
     }
